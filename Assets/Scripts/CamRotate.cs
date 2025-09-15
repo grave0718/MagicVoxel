@@ -11,6 +11,7 @@ public class CamRotate : MonoBehaviour
     {
         angle = Camera.main.transform.eulerAngles;
         angle.x *= -1;
+        
     }
 
 
