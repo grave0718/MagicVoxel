@@ -12,14 +12,14 @@ public class VoxelMaker : MonoBehaviour
     //static은 이 코드가 여러번 실행되어 독립되더라도 이 변수는 유일하게 정의
     public static List<GameObject> voxelPool = new List<GameObject>();
 
-
+    public Transform crosshair;
     void Start()
     {
         for (int i = 0; i < voxelPoolSize; i++)
         {
             GameObject voxel = Instantiate(voxelFactory);
             voxel.SetActive(false);
-            
+
             voxelPool.Add(voxel);
 
 
@@ -28,24 +28,30 @@ public class VoxelMaker : MonoBehaviour
     }
     void Update()
     {
-        currentTime += Time.deltaTime;
-
-        if (currentTime > CreateTime)
+        ARAVRInput.DrawCrosshair(crosshair);
+        if (ARAVRInput.Get(ARAVRInput.Button.One))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hitInfo = new RaycastHit();
+            currentTime += Time.deltaTime;
 
-            if (Physics.Raycast(ray, out hitInfo))
+            if (currentTime > CreateTime)
             {
-                if (voxelPool.Count > 0)
-                {
-                    currentTime = 0f;
-                    GameObject voxel = voxelPool[0]; //복셀풀에서 첫번째값을 가져옴
-                    voxel.SetActive(true);
-                    voxel.transform.position = hitInfo.point; //원하는 위치에 생성
-                    voxelPool.RemoveAt(0); //복셀풀에서 첫번째값 제거   
-                }
+                // Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                Ray ray = new Ray(ARAVRInput.RHandPosition, ARAVRInput.RHandDirection);
+                RaycastHit hitInfo = new RaycastHit();
 
+                if (Physics.Raycast(ray, out hitInfo))
+                {
+                    if (voxelPool.Count > 0)
+                    {
+                        currentTime = 0f;
+                        GameObject voxel = voxelPool[0]; //복셀풀에서 첫번째값을 가져옴
+                        voxel.SetActive(true);
+                        voxel.transform.position = hitInfo.point; //원하는 위치에 생성
+                        voxelPool.RemoveAt(0); //복셀풀에서 첫번째값 제거   
+                    }
+
+
+                }
             }
 
         }

@@ -23,10 +23,10 @@ public class CamRotate : MonoBehaviour
         //이동방향 별 회전 값 누적
         angle.x += x * sensitivity * Time.deltaTime;
         angle.y += y * sensitivity * Time.deltaTime;
-        
-        angle.x = Mathf.Clamp(angle.x,-90,90);
+
+        angle.x = Mathf.Clamp(angle.x, -90, 90);
         //실제 회전
         transform.eulerAngles = new Vector3(-angle.x, angle.y, transform.eulerAngles.z);
-
+        
     }
 }

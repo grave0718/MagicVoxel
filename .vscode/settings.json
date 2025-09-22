@@ -56,5 +56,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "MagicVoxel.sln"
+    "dotnet.defaultSolution": "MagicVoxel.sln",
+    "dotnet.preferCSharpExtension": true
 }
